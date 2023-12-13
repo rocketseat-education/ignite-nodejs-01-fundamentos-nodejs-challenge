@@ -58,7 +58,7 @@ export const routes = [
       const { id } = req.params
       const { title, description } = req.body
 
-      if (!title || !description) {
+      if (!title && !description) {
         return res.writeHead(400).end(
           JSON.stringify({ message: 'title or description are required' })
         )
@@ -71,8 +71,8 @@ export const routes = [
       }
 
       database.update('tasks', id, {
-        title,
-        description,
+        title: title ?? task.title,
+        description: description ?? task.description,
         updated_at: new Date()
       })
 
